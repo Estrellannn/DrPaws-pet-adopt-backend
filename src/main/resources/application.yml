@@ -9,6 +9,13 @@ spring:
     password: 你的mysql密码
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-file-size: 900MB
+      max-request-size: 900MB
+  web:
+    resources:
+      static-locations: classpath:/static/,file:D:/pet_upload/avatar/
 
 mybatis-plus:
   configuration:
