@@ -14,4 +14,6 @@ public class LoginDTO {
     private String avatar;
     private String bgImg;
     private Long id;
+    private String oldpassword;
+    private String newpassword;
 }

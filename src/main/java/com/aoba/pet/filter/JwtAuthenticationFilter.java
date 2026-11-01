@@ -26,15 +26,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authHeader=request.getHeader("Authorization");
         String token=null;
+        boolean hasAuthHeader = StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ");
         if (StringUtils.hasText(authHeader)&&authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
         }
             if (StringUtils.hasText(token)&&jwtUtil.validateToken(token)){
                 String username = jwtUtil.getUsername(token);
+                System.out.println("=====token校验通过，username："+username);
                 UsernamePasswordAuthenticationToken authToken
                         = new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                filterChain.doFilter(request, response);
+            }else {
+                if (hasAuthHeader){
+                    response.setContentType("application/json;charset=utf-8");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("{\"code\":401,\"msg\":\"token无效或者已过期\"}");
+                    return;
+                }
+                filterChain.doFilter(request,response);
             }
-            filterChain.doFilter(request, response);
+            //filterChain.doFilter(request, response);
 
     }}

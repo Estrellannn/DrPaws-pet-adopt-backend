@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/adopt")
+@RequestMapping("/adopt")
 public class AdoptController {
     @Resource
     private AdoptService adoptService;

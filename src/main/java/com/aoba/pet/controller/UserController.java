@@ -23,9 +23,6 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @PostMapping("/login")
     public Result<String> login(@RequestBody LoginDTO loginDTO){
-//        LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
-//        wrapper.eq(User::getUsername,loginDTO.getUsername());
-//        User user=userService.getOne(wrapper);
         User user=userService.getByUsername(loginDTO.getUsername());
 
         if(user==null){
@@ -59,6 +56,26 @@ public class UserController {
 
         userService.updateById(edituser);
         return Result.success("修改成功");
+    }
+
+    @PutMapping("/password")
+    public Result<String> password(@RequestBody LoginDTO passwordDTO){
+//        User opassword=userService.getByUsername(password);
+//        User npassword=userService.getByUsername(passwordDTO.getPassword());
+//        if(opassword=npassword){
+//            npassword.setPassword(passwordDTO.getPassword());
+//        }else {
+//            return Result.fail("旧密码错误");
+//        }
+//        return Result.success("密码修改成功");
+        User user=userService.getByUsername(passwordDTO.getUsername());
+        if(!passwordEncoder.matches(passwordDTO.getOldpassword(), user.getPassword())){
+            return Result.fail("旧密码错误");
+        }
+        String newEncodePwd=passwordEncoder.encode(passwordDTO.getNewpassword());
+        user.setPassword(newEncodePwd);
+        userService.updateById(user);
+        return Result.success("密码修改成功");
     }
 
     @PostMapping("/register")
