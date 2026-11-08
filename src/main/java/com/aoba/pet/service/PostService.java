@@ -10,7 +10,9 @@ import java.util.List;
 
 @Service
 public interface PostService extends IService<Post> {
-    IPage<Post> getPostPage(Long pageNum, Long pageSize);
+    IPage<PostVO> getPostPage(Integer current, Integer size,Integer categoryId);
 
     List<PostVO> getPostList(Integer categoryId);
+
+    boolean pubilshPost(Post post);
 }

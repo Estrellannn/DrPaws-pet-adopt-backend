@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/login","/user/register").permitAll()
                         .requestMatchers("/img/**").permitAll()
-                        .requestMatchers("upload/avatar","/avatar/**","/*.png","/*.jpg","/*.jpeg","/*.webp").permitAll()
+                        .requestMatchers("upload/avatar","/avatar/**","postimg/upload","/postimg/**","/*.png","/*.jpg","/*.jpeg","/*.webp").permitAll()
                         // 只放行预检OPTIONS请求，GET访问列表需要token登录
                         //.requestMatchers(HttpMethod.OPTIONS,"/api/adopt/list").permitAll()
                         .anyRequest().authenticated()

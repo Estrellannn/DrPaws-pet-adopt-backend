@@ -11,6 +11,7 @@
 
         <result column="username" property="username"/>
         <result column="avatar" property="avatar"/>
+        <result column="address" property="address"/>
 
         <collection property="imgList" ofType="java.lang.String">
             <result column="image_url"/>
@@ -26,6 +27,7 @@
         p.user_id,
         u.username,
         u.avatar,
+        u.address,
         pi.image_url
         FROM post p
         LEFT JOIN user u ON p.user_id = u.id
@@ -37,5 +39,19 @@
         </where>
         ORDER BY p.id
     </select>
+
+    <select id="selectPostPage" resultType="com.aoba.pet.vo.PostVO">
+        SELECT p.id, p.title, p.content, p.category_id AS categoryId, p.user_id AS userId,
+        u.username, u.avatar, u.address
+        FROM post p
+        LEFT JOIN user u ON p.user_id = u.id
+        <where>
+            <if test="categoryId != null">
+                AND p.category_id = #{categoryId}
+            </if>
+        </where>
+        ORDER BY p.id
+    </select>
+
 
 </mapper>

@@ -11,6 +11,7 @@ public class PostVO {
     private String content;
     private Integer userId;
     private Integer categoryId;
+    private String address;
 
     private String username;
     private String avatar;

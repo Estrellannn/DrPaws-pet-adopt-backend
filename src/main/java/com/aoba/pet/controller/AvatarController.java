@@ -32,4 +32,6 @@ public class AvatarController {
             return Result.fail("上传失败");
         }
     }
+
+
 }

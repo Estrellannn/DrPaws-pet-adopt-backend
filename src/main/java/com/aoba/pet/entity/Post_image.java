@@ -13,4 +13,5 @@ public class Post_image {
     private Integer id;
     private Integer postId;
     private String imageUrl;
+
 }

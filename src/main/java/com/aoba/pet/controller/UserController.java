@@ -11,9 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.Authenticator;
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -31,13 +29,13 @@ public class UserController {
         if (!passwordEncoder.matches(loginDTO.getPassword(),user.getPassword())){
             return Result.fail("密码错误");
         }
-        String token= JwtUtil.generateToken(user.getUsername());
+        String token= JwtUtil.generateToken(user.getId());
         return Result.success(token);
     }
     @GetMapping("/getInfo")
     public Result<User> getUserInfo(Authentication authentication){
-        String username=authentication.getName();
-        User user=userService.getByUsername(username);
+        String idStr=authentication.getName();
+        User user=userService.getById(Integer.valueOf(idStr));
         user.setPassword(null);
         return Result.success(user);
     }
